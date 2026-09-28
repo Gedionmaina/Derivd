@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Derivd - Trading Platform</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #07111f;
+      color: white;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #0b1b2d;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1d334d;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #19c37d;
+    }
+
+    .demo {
+      background: #172b41;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #7ee8b8;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .balance {
+      background: linear-gradient(135deg, #102943, #0b1d31);
+      padding: 22px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      border: 1px solid #1c3a57;
+    }
+
+    .balance p {
+      color: #9fb2c8;
+      font-size: 14px;
+    }
+
+    .balance h1 {
+      margin-top: 8px;
+      font-size: 32px;
+    }
+
+    .chart {
+      height: 250px;
+      background: #091827;
+      border-radius: 15px;
+      border: 1px solid #1d354e;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-title {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      color: #a8bbcf;
+      z-index: 2;
+    }
+
+    .line {
+      position: absolute;
+      width: 150%;
+      height: 3px;
+      background: #19c37d;
+      top: 55%;
+      left: -10%;
+      transform: rotate(-7deg);
+      box-shadow: 0 0 12px #19c37d;
+    }
+
+    .line2 {
+      top: 62%;
+      transform: rotate(8deg);
+      opacity: .55;
+    }
+
+    .trade-box {
+      background: #0d2034;
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid #1d354e;
+    }
+
+    label {
+      display: block;
+      color: #9fb2c8;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      background: #071523;
+      color: white;
+      border: 1px solid #29445f;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      padding: 15px;
+      border-radius: 9px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .up {
+      background: #159f68;
+    }
+
+    .down {
+      background: #d94b5b;
+    }
+
+    button:active {
+      transform: scale(.98);
+    }
+
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      color: #a8bbcf;
+      min-height: 25px;
+    }
+
+    .history {
+      margin-top: 20px;
+      background: #0d2034;
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid #1d354e;
+    }
+
+    .history h3 {
+      margin-bottom: 15px;
+    }
+
+    .trade {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #20384f;
+      font-size: 14px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 10px;
+      color: #667d94;
+      font-size: 12px;
+    }
+
+    .notice {
+      background: #162c42;
+      color: #b8c9da;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Derivd</div>
+  <div class="demo">DEMO ACCOUNT</div>
+</header>
+
+<div class="container">
+
+  <div class="notice">
+    This is a demo trading platform. No real money is involved.
+  </div>
+
+  <div class="balance">
+    <p>Demo Balance</p>
+    <h1 id="balance">$10,000.00</h1>
+  </div>
+
+  <div class="chart">
+    <div class="chart-title">Market • Demo</div>
+    <div class="line"></div>
+    <div class="line line2"></div>
+  </div>
+
+  <div class="trade-box">
+
+    <label>Stake Amount</label>
+    <input type="number" id="stake" value="10" min="1">
+
+    <label>Expiry</label>
+    <select id="expiry">
+      <option value="30">30 Seconds</option>
+      <option value="60">1 Minute</option>
+      <option value="300">5 Minutes</option>
+    </select>
+
+    <div class="buttons">
+      <button class="up" onclick="trade('UP')">
+        ▲ UP
+      </button>
+
+      <button class="down" onclick="trade('DOWN')">
+        ▼ DOWN
+      </button>
+    </div>
+
+    <div class="message" id="message">
+      Choose UP or DOWN to place a demo trade.
+    </div>
+
+  </div>
+
+  <div class="history">
+    <h3>Trade History</h3>
+
+    <div id="history">
+      <div class="trade">
+        <span>No trades yet</span>
+        <span>—</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  © 2026 Derivd • Demo Trading Platform
+</div>
+
+<script>
+
+let balance = 10000;
+
+function updateBalance() {
+  document.getElementById("balance").innerText =
+    "$" + balance.toFixed(2);
+}
+
+function trade(direction) {
+
+  const stake = Number(document.getElementById("stake").value);
+  const expiry = Number(document.getElementById("expiry").value);
+
+  if (stake <= 0) {
+    document.getElementById("message").innerText =
+      "Enter a valid stake amount.";
+    return;
+  }
+
+  if (stake > balance) {
+    document.getElementById("message").innerText =
+      "Insufficient demo balance.";
+    return;
+  }
+
+  balance -= stake;
+  updateBalance();
+
+  document.getElementById("message").innerText =
+    "Demo trade placed: " + direction +
+    ". Waiting for expiry...";
+
+  setTimeout(function() {
+
+    const win = Math.random() > 0.5;
+
+    if (win) {
+
+      const profit = stake * 0.8;
+      balance += stake + profit;
+
+      document.getElementById("message").innerText =
+        "Demo WIN! Profit: $" + profit.toFixed(2);
+
+      addHistory(direction, "WIN", profit);
+
+    } else {
+
+      document.getElementById("message").innerText =
+        "Demo LOSS. Stake lost: $" + stake.toFixed(2);
+
+      addHistory(direction, "LOSS", -stake);
+    }
+
+    updateBalance();
+
+  }, expiry * 1000);
+}
+
+function addHistory(direction, result, amount) {
+
+  const history = document.getElementById("history");
+
+  if (history.innerText.includes("No trades yet")) {
+    history.innerHTML = "";
+  }
+
+  const row = document.createElement("div");
+  row.className = "trade";
+
+  const sign = amount >= 0 ? "+" : "";
+
+  row.innerHTML =
+    "<span>" + direction + "</span>" +
+    "<span>" + result + " " +
+    sign + "$" + amount.toFixed(2) + "</span>";
+
+  history.prepend(row);
+}
+
+updateBalance();
+
+</script>
+
+</body>
+</html>
